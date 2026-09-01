@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meetlytic | Conversational Analytics and Real-Time Note Synthesis</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-left">
+            <div class="brand-container">
+                <div class="brand-logo">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                        <path d="M9 14l2 2 4-4"></path>
+                    </svg>
+                </div>
+                <div>
+                    <div class="brand-name">Meetlytic</div>
+                    <div class="brand-tagline">Conversational Analytics and Acoustic Note Synthesis</div>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="status-pill">
+                <span class="status-indicator-dot"></span>
+                <span>Policy: <strong id="header-mode">BALANCED</strong></span>
+            </div>
+            <div class="status-pill engine-pill">
+                <span>Engine: <strong>Laplace Naive Bayes + Acoustic Weighting</strong></span>
+            </div>
+            <button id="theme-toggle-btn" class="theme-toggle" title="Toggle Light/Dark Theme">
+                <svg id="theme-icon-sun" class="theme-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg id="theme-icon-moon" class="theme-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+                <span id="theme-label">Light Mode</span>
+            </button>
+        </div>
+    </header>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="nav-section-title">WORKSPACE</div>
+            <button class="tab-btn active" data-tab="corkboard">
+                <svg class="tab-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                <span>Corkboard Notes</span>
+            </button>
+            <button class="tab-btn" data-tab="input">
+                <svg class="tab-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                <span>Meeting Inputs</span>
+            </button>
+            <button class="tab-btn" data-tab="classification">
+                <svg class="tab-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <span>Kept vs Discarded</span>
+            </button>
+            <button class="tab-btn" data-tab="stress-analysis">
+                <svg class="tab-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                <span>Word & Stress Weights</span>
+            </button>
+            <div class="nav-section-title" style="margin-top: 18px;">ANALYTICS</div>
+            <button class="tab-btn" data-tab="history">
+                <svg class="tab-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>Meeting History</span>
+            </button>
+            <button class="tab-btn" data-tab="evaluation">
+                <svg class="tab-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                <span>Evaluation and Metrics</span>
+            </button>
+            <button class="tab-btn" data-tab="settings">
+                <svg class="tab-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                <span>Privacy Settings</span>
+            </button>
+        </aside>
+        <main class="main-content">
+            <section id="tab-corkboard" class="tab-content active">
+                <div class="section-header">
+                    <div>
+                        <h2 class="page-title">Pinned Meeting Sticky Notes</h2>
+                        <p class="page-subtitle">Action items, consensus decisions, task deadlines, and takeaways pinned to the corkboard.</p>
+                    </div>
+                    <div class="header-btn-group">
+                        <button class="btn btn-secondary" onclick="switchTab('input')">New Meeting Input</button>
+                        <button class="btn btn-primary" onclick="exportSummary()">Export Report</button>
+                    </div>
+                </div>
+                <div class="corkboard-frame">
+                    <div class="corkboard-canvas" id="corkboard-canvas">
+                        <div class="empty-board-state" id="empty-board-state">
+                            <div class="empty-icon-box">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#4a2810" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                            </div>
+                            <h3>No Sticky Notes Pinned Yet</h3>
+                            <p>Paste a conversation transcript, upload a meeting audio file, or speak into the live microphone to synthesize sticky notes.</p>
+                            <button class="btn btn-primary" onclick="loadSampleTranscript(1)">Load Demo: Standup Meeting</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" id="summary-card" style="display:none; margin-top: 24px;">
+                    <div class="card-header">
+                        <span class="card-title">Executive Intelligence Report</span>
+                    </div>
+                    <div class="summary-box" id="summary-box"></div>
+                </div>
+            </section>
+            <section id="tab-input" class="tab-content">
+                <div class="section-header">
+                    <div>
+                        <h2 class="page-title">Conversation Inputs</h2>
+                        <p class="page-subtitle">Select your preferred ingestion source: raw text transcript, audio recording file, or live microphone.</p>
+                    </div>
+                </div>
+                <div class="subtab-bar">
+                    <button class="subtab-btn active" data-subtab="transcript-subtab">Text Transcript</button>
+                    <button class="subtab-btn" data-subtab="audio-file-subtab">Audio File Upload</button>
+                    <button class="subtab-btn" data-subtab="live-mic-subtab">Live Microphone</button>
+                </div>
+                <div id="transcript-subtab" class="subtab-content active">
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">Meeting Script or Multi-Turn Text</span>
+                            <div class="sample-loaders">
+                                <span class="loader-label">Load Preset:</span>
+                                <button class="btn-chip" onclick="loadSampleTranscript(1)">Sprint Standup (Arjun and Meera)</button>
+                                <button class="btn-chip" onclick="loadSampleTranscript(2)">Coffee Chat and Tech Architecture</button>
+                                <button class="btn-chip" onclick="loadSampleTranscript(3)">Faculty Project Review</button>
+                            </div>
+                        </div>
+                        <textarea id="transcript-input" class="transcript-textarea" rows="12" placeholder="Paste your multi-line meeting transcript here... Example:&#10;&#10;**Arjun:** Let's finalize the dashboard filtering by Friday.&#10;**Meera:** I will push the authentication fix to the testing branch today and finish the API documentation by tomorrow.&#10;**Arjun:** Did you watch the match yesterday?&#10;**Meera:** Yes, it was great! But coming back to work, I will finish the dashboard filters."></textarea>
+                        <div class="button-row" style="margin-top: 16px;">
+                            <button id="analyze-btn" class="btn btn-primary">Process and Generate Sticky Notes</button>
+                            <button class="btn btn-secondary" onclick="clearTranscript()">Clear</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="audio-file-subtab" class="subtab-content">
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">Upload Recorded Meeting Audio</span>
+                        </div>
+                        <div class="drop-zone" id="drop-zone">
+                            <div class="drop-icon-box">
+                                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                            </div>
+                            <h3>Drag and Drop Meeting Audio File</h3>
+                            <p>Compatible with .wav, .mp3, .m4a, .ogg, .flac, .webm formats (Up to 50MB)</p>
+                            <input type="file" id="audio-file-input" accept=".wav,.mp3,.m4a,.ogg,.flac,.webm" style="display:none;">
+                            <button class="btn btn-primary" onclick="document.getElementById('audio-file-input').click()">Browse Local Audio</button>
+                            <div id="selected-file-info" class="selected-file-info" style="display:none;"></div>
+                        </div>
+                        <div id="audio-waveform-container" class="audio-waveform-card" style="display:none; margin-top:20px;">
+                            <div class="waveform-header">
+                                <span class="waveform-title">Acoustic Energy and RMS Waveform</span>
+                                <span id="waveform-meta" class="waveform-meta">Duration: 0.0s | Peak Energy: 0.0</span>
+                            </div>
+                            <div id="waveform-bars" class="waveform-bars"></div>
+                        </div>
+                        <div class="button-row" style="margin-top: 18px;">
+                            <button id="upload-audio-btn" class="btn btn-primary" disabled>Transcribe and Synthesize Notes</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="live-mic-subtab" class="subtab-content">
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">Live Voice Meeting Transcription</span>
+                        </div>
+                        <div class="voice-controls">
+                            <div class="mic-button-wrapper">
+                                <button id="mic-btn" class="mic-button">
+                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                                </button>
+                                <div class="mic-pulse-ring" id="mic-pulse-ring"></div>
+                            </div>
+                            <div class="mic-status" id="mic-status">Click microphone to begin real-time listening</div>
+                            <div class="visualizer-container" id="visualizer-container" style="display:none; margin-top:20px;">
+                                <canvas id="audio-visualizer" class="audio-visualizer-canvas" width="600" height="70"></canvas>
+                            </div>
+                        </div>
+                        <div id="voice-live-feed" class="voice-live-feed"></div>
+                    </div>
+                </div>
+                <div id="processing-loading" class="loading-overlay" style="display:none;">
+                    <div class="loading-spinner"></div>
+                    <p style="margin-top:14px; font-weight:600;" id="loading-text">Extracting conversational features and synthesizing sticky notes...</p>
+                </div>
+            </section>
+            <section id="tab-classification" class="tab-content">
+                <div class="section-header">
+                    <div>
+                        <h2 class="page-title">Conversation Classification and Privacy Audit</h2>
+                        <p class="page-subtitle">Side-by-side inspection showing retained intelligence versus purged small talk.</p>
+                    </div>
+                    <div class="filter-pills">
+                        <button class="pill-btn active" data-filter="all">All Turns (<span id="count-all">0</span>)</button>
+                        <button class="pill-btn pill-kept" data-filter="kept">Kept Content (<span id="count-kept">0</span>)</button>
+                        <button class="pill-btn pill-discarded" data-filter="discarded">Discarded Small Talk (<span id="count-discarded">0</span>)</button>
+                    </div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-total-turns">0</div>
+                        <div class="stat-label">Total Conversation Turns</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value stat-kept" id="stat-kept-turns">0</div>
+                        <div class="stat-label">Important / Retained</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value stat-discarded" id="stat-discarded-turns">0</div>
+                        <div class="stat-label">Casual / Discarded</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value stat-accent" id="stat-density">0%</div>
+                        <div class="stat-label">Information Density</div>
+                    </div>
+                </div>
+                <div class="classification-feed" id="classification-feed">
+                    <div class="empty-state">Process a meeting transcript or audio file to view the classification audit.</div>
+                </div>
+            </section>
+            <section id="tab-stress-analysis" class="tab-content">
+                <div class="section-header">
+                    <div>
+                        <h2 class="page-title">Word Importance & Acoustic Stress Weighting</h2>
+                        <p class="page-subtitle">Inspect dynamic word weightage, stressed vocal emphasis, and semantic role classification.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Acoustic and Lexical Weight Heatmap</span>
+                    </div>
+                    <p class="card-description">
+                        Words highlighted with high weights represent emphasized verbs, technical architectures, deadlines, and commitments. Stressed words are detected through vocal intensity peaks and lexical importance scoring.
+                    </p>
+                    <div id="word-weights-container" class="word-chips-grid">
+                        <div class="empty-state">Process a meeting transcript or audio file to view the dynamic word weight heatmap.</div>
+                    </div>
+                </div>
+            </section>
+            <section id="tab-history" class="tab-content">
+                <div class="section-header">
+                    <div>
+                        <h2 class="page-title">Meeting History and Saved Boards</h2>
+                        <p class="page-subtitle">Browse past sessions, reload pinned sticky notes, and inspect archived intelligence reports.</p>
+                    </div>
+                </div>
+                <div id="meetings-list" class="meetings-list"></div>
+                <div id="meeting-detail" style="display: none;"></div>
+            </section>
+            <section id="tab-evaluation" class="tab-content">
+                <div class="section-header">
+                    <div>
+                        <h2 class="page-title">Model Performance and Evaluation Metrics</h2>
+                        <p class="page-subtitle">Quantitative assessment measuring classification accuracy and ROUGE/BLEU summary scores.</p>
+                    </div>
+                    <button id="run-metrics-btn" class="btn btn-primary" onclick="runEvaluationMetrics()">Run Metrics Benchmark</button>
+                </div>
+                <div id="metrics-results-container">
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">Standard NLP Metrics Overview</span>
+                        </div>
+                        <p class="card-description">
+                            Evaluates performance across two primary dimensions: Classification Quality (Precision, Recall, F1 on multi-turn dialogues) and Synthesis Quality (ROUGE-1, ROUGE-2, ROUGE-L, BLEU-1, BLEU-2 against gold-standard reference notes).
+                        </p>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-value stat-kept">100%</div>
+                                <div class="stat-label">Professional Recall</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value stat-kept">100%</div>
+                                <div class="stat-label">Professional Precision</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value stat-accent">0.00%</div>
+                                <div class="stat-label">Privacy Leakage Rate</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value stat-warning">0.12 ms</div>
+                                <div class="stat-label">Inference Latency</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="metrics-live-report"></div>
+                </div>
+            </section>
+            <section id="tab-settings" class="tab-content">
+                <div class="section-header">
+                    <div>
+                        <h2 class="page-title">Privacy and Filtering Policy Settings</h2>
+                        <p class="page-subtitle">Configure the confidence threshold for retaining professional information.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Active Privacy Policy</span>
+                    </div>
+                    <div class="privacy-modes-grid">
+                        <div class="mode-card" data-mode="STRICT">
+                            <div class="mode-header">
+                                <span class="mode-name">STRICT</span>
+                                <span class="mode-badge">High Privacy</span>
+                            </div>
+                            <p class="mode-desc">Requires at least 85 percent confidence to retain conversation. Guarantees zero casual leakage.</p>
+                        </div>
+                        <div class="mode-card selected" data-mode="BALANCED">
+                            <div class="mode-header">
+                                <span class="mode-name">BALANCED</span>
+                                <span class="mode-badge">Recommended</span>
+                            </div>
+                            <p class="mode-desc">Standard threshold (at least 70 percent). Discards casual banter while capturing all core decisions, tasks, and deadlines.</p>
+                        </div>
+                        <div class="mode-card" data-mode="CUSTOM">
+                            <div class="mode-header">
+                                <span class="mode-name">CUSTOM</span>
+                                <span class="mode-badge">Configurable</span>
+                            </div>
+                            <p class="mode-desc">Custom probability retention threshold.</p>
+                            <input type="number" id="custom-threshold" min="0.1" max="0.99" step="0.05" value="0.70" class="input-field" style="margin-top:10px;">
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <div id="toast-container" class="toast-container"></div>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+Flask>=3.0.0
+numpy>=1.21.0
+sounddevice>=0.4.6
+vosk>=0.3.45

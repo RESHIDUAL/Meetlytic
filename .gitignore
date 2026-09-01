@@ -1,0 +1,37 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# SQLite databases & logs
+*.db
+*.sqlite
+*.sqlite3
+*.log
+
+# Caches and temporary files
+.cache/
+.pytest_cache/
+*.tmp
+*~
+
+# Offline Vosk ASR models
+model/
+vosk-model*/
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE & Editor settings
+.idea/
+.vscode/
+*.swp
+*.swo
