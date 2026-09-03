@@ -32,67 +32,63 @@ Meetlytic provides 20 distinct modular features across signal processing, privac
 - Multi-turn conversation state machine tracking context, participants, discourse goals, and open threads across long meetings.
 - Resolves cross-turn contradictions, superseded estimates, and conversational corrections automatically.
 
-### 6. Historical vs. Approved Value State Isolation
-- Isolates preliminary estimates and superseded budgets from final ratified values.
-- If an original budget of $50,000 is revised to an approved budget of $45,000, only the approved $45,000 is promoted to current status facts and sticky notes, while historical context is stored separately.
-
-### 7. Spoken Numeric & Currency Normalization Engine
+### 6. Spoken Numeric & Currency Normalization Engine
 - Converts spoken number words, compound scales, and currencies into clean numerical representations.
 - Automatically transforms phrases such as "two hundred sixty three million dollars" to "$263 million", "forty six percent" to "46%", and "seventy point three percent" to "70.3%".
 
-### 8. Atomic Proposition & Multi-Metric Fact Decomposition
+### 7. Atomic Proposition & Multi-Metric Fact Decomposition
 - Decomposes compound, multi-clause run-on sentences into discrete, readable atomic facts.
 - Formats extracted facts into normalized propositions: Entity + Property = Value + Time Context.
 - Reconciles correlated values (e.g., 70.3% spent through month 10 -> Approximately 29.7% of budget remains; 2 months remaining in 12-month cycle).
 
-### 9. Action Item Validation & Anaphora Object Resolution
+### 8. Action Item Validation & Anaphora Object Resolution
 - Enforces strict grammatical and semantic validation on action items: requires concrete action verbs, non-vague target objects, and owner assignment.
 - Discards unanchored commands and pronoun-only phrases (e.g., "Rahul, do it" or "Handle that") unless the antecedent object is unambiguously resolved from preceding turns.
 
-### 10. Consensus Decision vs. Opinion Boundary Enforcement
+### 9. Consensus Decision vs. Opinion Boundary Enforcement
 - Strictly separates individual opinions, preferences, and proposals ("I think we should switch to PostgreSQL") from ratified group decisions.
 - Promotes decisions only upon detection of explicit consensus markers, leadership ratifications, or formal vote confirmations.
 
-### 11. Task Dependency & Blocker Chain Tracking
+### 10. Task Dependency & Blocker Chain Tracking
 - Identifies causal dependencies and execution blockers across speakers (e.g., "Task B cannot proceed until Task A is deployed").
 - Maps blocker conditions to owning owners and resolution states.
 
-### 12. Speaker Diarization & Entity Resolution
+### 11. Speaker Diarization & Entity Resolution
 - Maps raw transcript speaker identifiers (e.g., "SPEAKER_01", "Speaker A", "John D.") to normalized participant profiles.
 - Resolves first-name references and conversational vocatives to assigned team members.
 
-### 13. Temporal Anchor & Milestone Resolution
+### 12. Temporal Anchor & Milestone Resolution
 - Resolves relative temporal markers ("by next Friday", "end of Q3", "in two weeks") into explicit milestone records and deadline trackers.
 
-### 14. Dynamic Topic Modeling & Canonical Normalization
+### 13. Dynamic Topic Modeling & Canonical Normalization
 - Extracts key discussion topics using TF-IDF term weighting and semantic clustering.
 - Strips conversational metadata and confirmation tokens ("Confirmed", "Checked", "Estimate") to produce canonical, domain-independent topic titles.
 
-### 15. Visual Corkboard Sticky-Notes Dashboard
+### 14. Visual Corkboard Sticky-Notes Dashboard
 - Real-time responsive Web GUI that maps extracted meeting intelligence to visual sticky notes.
 - Color-coded categories: Gold for Decisions, Blue for Action Items, Red for Blockers/Risks, Green for Current Metrics, and Purple for Deadlines.
 
-### 16. Participant Workload & Accountability Profiling
+### 15. Participant Workload & Accountability Profiling
 - Generates per-participant workload cards showing turn distribution, focus areas, and assigned action items.
 
-### 17. Multi-Source Audio & Transcript Input Pipeline
+### 16. Multi-Source Audio & Transcript Input Pipeline
 - Supports three ingestion modes:
   1. Live microphone stream via standard PC soundcard.
   2. Batch audio file upload (.wav, .mp3, .m4a, .ogg, .flac) via web dashboard.
   3. Direct multi-speaker transcript paste into web or CLI simulator.
 
-### 18. Hardware Table Node Streaming via ESP8266 & I2S MEMS Mic
+### 17. Hardware Table Node Streaming via ESP8266 & I2S MEMS Mic
 - Firmware and hardware bridge for standalone ESP8266 / NodeMCU micro-controllers with INMP441 I2S digital MEMS microphones.
 - Streams 16 kHz 16-bit PCM audio chunks over local WiFi TCP sockets directly to the Meetlytic engine.
 
-### 19. Mathematical First-Principles Fallback Subsystems
+### 18. Mathematical First-Principles Fallback Subsystems
 - Contains standalone, pure Python/NumPy implementations of:
   - 13-coefficient Mel-Frequency Cepstral Coefficients (MFCC).
   - Dynamic Time Warping (DTW) with Sakoe-Chiba band constraints for acoustic keyword spotting.
   - Multinomial Naive Bayes classifier with Laplace smoothing.
   - Voice Activity Detection (VAD) using Short-Time Energy, Zero-Crossing Rate, and Spectral Flatness.
 
-### 20. SQLite Meeting Record Persistence & Clean Schema
+### 19. SQLite Meeting Record Persistence & Clean Schema
 - ACID-compliant local storage using SQLite (`web_meeting_records.db` / `meeting_records.db`).
 - Stores sanitized professional transcripts, structured action items, decisions, and privacy audit metrics with zero cloud exposure.
 
